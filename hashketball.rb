@@ -147,3 +147,22 @@ def shoe_size(player_name)
   end
   foundaway ? foundaway[:shoe] : foundhome[:shoe]
 end
+
+def team_names
+  data = game_hash()
+  [data[:home][:team_name],data[:away][:team_name]]
+end
+
+def player_numbers(team_name)
+  data = game_hash()
+  teaminfo = data[:home][:team_name] == team_name ? data[:home] : data[:away]
+  teaminfo[:players].collect do |playerinfo|
+    playerinfo[:number]
+  end
+end
+
+def team_colors(team_name)
+  data = game_hash()
+  teaminfo = data[:home][:team_name] == team_name ? data[:home] : data[:away]
+  teaminfo[:colors]
+end
