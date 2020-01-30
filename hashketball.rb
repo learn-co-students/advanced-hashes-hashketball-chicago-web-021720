@@ -126,5 +126,14 @@ def game_hash
   }
 end
 
-def num_points_scored
+def num_points_scored(player_name)
+  data = game_hash()
+  foundhome = data[:home][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundaway = data[:away][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  return foundhome[:points] || foundaway[:points]
+
 end
