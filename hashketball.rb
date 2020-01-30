@@ -134,6 +134,5 @@ def num_points_scored(player_name)
   foundaway = data[:away][:players].find do |player|
     player[:player_name] == player_name
   end
-  return foundhome[:points] || foundaway[:points]
-
+  foundaway ? foundaway[:points] : foundhome[:points]
 end
