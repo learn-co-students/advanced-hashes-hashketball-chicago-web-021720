@@ -1,4 +1,6 @@
 # Write your code here!
+require 'pry'
+
 def game_hash
   {
     :home => {
@@ -165,4 +167,18 @@ def team_colors(team_name)
   data = game_hash()
   teaminfo = data[:home][:team_name] == team_name ? data[:home] : data[:away]
   teaminfo[:colors]
+end
+
+def player_stats(player_name)
+  data = game_hash()
+  foundhome = data[:home][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundaway = data[:away][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundinfo= foundaway ? foundaway : foundhome
+  foundinfo.reject do |key|
+    key == :player_name
+  end
 end
