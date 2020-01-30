@@ -136,3 +136,14 @@ def num_points_scored(player_name)
   end
   foundaway ? foundaway[:points] : foundhome[:points]
 end
+
+def shoe_size(player_name)
+  data = game_hash()
+  foundhome = data[:home][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundaway = data[:away][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundaway ? foundaway[:shoe] : foundhome[:shoe]
+end
