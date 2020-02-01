@@ -236,3 +236,34 @@ def winning_team
   end
   awayscore > homescore ? data[:away][:team_name] : data[:home][:team_name]
 end
+
+def player_with_longest_name
+  allplayers = get_all_players()
+  sortedplayers = allplayers.sort_by do |name|
+    name.length()
+  end
+  sortedplayers[sortedplayers.length() - 1]
+end
+
+def steals(player_name)
+  data = game_hash()
+  foundhome = data[:home][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundaway = data[:away][:players].find do |player|
+    player[:player_name] == player_name
+  end
+  foundaway ? foundaway[:steals] : foundhome[:steals]
+end
+
+def long_name_steals_a_ton?
+  longname = player_with_longest_name()
+  allplayers = get_all_players()
+  longestnamenumber = steals(longname)
+  allplayers.each do |player|
+    if steals(player) > longestnamenumber
+      return false
+    end
+  end
+  true
+end
