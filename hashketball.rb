@@ -181,4 +181,58 @@ def player_stats(player_name)
   foundinfo.reject do |key|
     key == :player_name
   end
+  foundinfo.reject! do |key| key == :player_name end
+end
+
+def big_shoe_rebounds
+  data = game_hash()
+  home_players = data[:home][:players]
+  away_players = data[:away][:players]
+  shoerebound = []
+  home_players.each do |player|
+    shoerebound << [player[:shoe],player[:rebounds]]
+  end
+  away_players.each do |player|
+    shoerebound << [player[:shoe],player[:rebounds]]
+  end
+  shoerebound = shoerebound.sort_by do |a|
+    a[0]
+  end
+  shoerebound[shoerebound.length() -1][1]
+end
+
+def get_all_players
+  data = game_hash()
+  allplayers = []
+  data[:home][:players].each do |player|
+    allplayers << player[:player_name]
+  end
+  data[:away][:players].each do |player|
+    allplayers << player[:player_name]
+  end
+  allplayers
+end
+
+def most_points_scored
+  allplayers = get_all_players()
+
+  allscores = allplayers.map do |player|
+    [player, num_points_scored(player)]
+  end
+
+  allscores = allscores.sort_by do |a|
+    a[1]
+  end
+  allscores[allscores.length() -1][0]
+end
+
+def winning_team
+  data = game_hash()
+  homescore = data[:home][:players].reduce(0) do |sum,player|
+    sum + player[:points]
+  end
+  awayscore = data[:away][:players].reduce(0) do |sum,player|
+    sum + player[:points]
+  end
+  awayscore > homescore ? data[:away][:team_name] : data[:home][:team_name]
 end
